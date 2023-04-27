@@ -257,6 +257,17 @@ where
         timeout: T,
     ) -> KafkaResult<()>;
 
+    /// Seek consumer to the provided offset for each (topic, partition)  in
+    /// `topic_partition_list`. After a successful call to `seek_partitions`,
+    /// the next poll of the consumer will return a message with
+    /// (partition, offset) matching one of the elements in
+    /// `topic_partition_list`.
+    fn seek_partitions<T: Into<Timeout>>(
+        &self,
+        topic_partition_list: &TopicPartitionList,
+        timeout: T,
+    ) -> KafkaResult<()>;
+
     /// Commits the offset of the specified message. The commit can be sync
     /// (blocking), or async. Notice that when a specific offset is committed,
     /// all the previous offsets are considered committed as well. Use this
